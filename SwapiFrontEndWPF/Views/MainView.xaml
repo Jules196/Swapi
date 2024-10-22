@@ -1,0 +1,123 @@
+﻿<UserControl x:Class="SwapiFrontEndWPF.Views.MainView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SwapiFrontEndWPF.Views"
+             xmlns:vm ="clr-namespace:SwapiFrontEndWPF.ViewModels"
+             xmlns:converter="clr-namespace:SwapiFrontEndWPF.Converter"
+             xmlns:validation="clr-namespace:SwapiFrontEndWPF.ValidationRules"
+             xmlns:p="clr-namespace:SwapiFrontEndWPF.Resources"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.DataContext>
+        <vm:MainViewModel />
+    </UserControl.DataContext>
+    <UserControl.Resources>
+        <converter:StringToVisibilityConverter x:Key="StringToVisibilityConverter" />
+        <converter:InvertedVisibilityConverter x:Key="InvertedVisibilityConverter" />
+        <Style x:Key="CustomErrorControlOnErrorStyle" TargetType="TextBox">
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Validation.ErrorTemplate">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <StackPanel>
+                            <AdornedElementPlaceholder x:Name="placeholder" />
+                            <TextBlock FontSize="11" FontStyle="Italic" Foreground="Red"
+                                       Text="{Binding ElementName=placeholder, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}" />
+                        </StackPanel>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <Grid HorizontalAlignment="Stretch"
+          VerticalAlignment="Stretch">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid VerticalAlignment="Stretch"
+              HorizontalAlignment="Stretch"
+              x:Name="MainGrid"
+              Grid.Column="0" Grid.Row="0"
+              Visibility="{Binding ErrorMessage, Converter={StaticResource InvertedVisibilityConverter}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="270" />
+            </Grid.ColumnDefinitions>
+            <ListBox Grid.Column="0" x:Name="PersonListBox"
+                     DisplayMemberPath="Name"
+                     HorizontalAlignment="Stretch"
+                     VerticalAlignment="Stretch"
+                     ItemsSource="{Binding PersonDTOs}"
+                     SelectedItem="{Binding SelectedPerson}"
+                     PreviewMouseLeftButtonDown="ListBox_PreviewMouseLeftButtonDown"
+                     SelectionChanged="ListBox_SelectionChanged"/>
+            <Grid Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0"
+                        Orientation="Vertical"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        Margin="10" >
+                    <TextBlock Text="Current Year" Margin="0,10,0,0"/>
+                    <TextBox x:Name="CurrentYearTextBlock" Margin="0,0,0,10" Style="{StaticResource CustomErrorControlOnErrorStyle}">
+                        <TextBox.Text>
+                            <Binding Path="CurrentYear" UpdateSourceTrigger="PropertyChanged" ValidatesOnExceptions="True">
+                                <Binding.ValidationRules>
+                                    <validation:YearValidationRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <TextBlock Text="{x:Static p:Resources.AverageHeight}" Margin="0,10,0,0"/>
+                    <TextBlock x:Name="AverageHeightTextBlock" Text="{Binding AverageHeight}" Margin="0,0,0,10"/>
+                    <TextBlock Text="{x:Static p:Resources.AverageAge}" Margin="0,10,0,0"/>
+                    <TextBlock x:Name="AverageAgeTextBlock" Text="{Binding AverageAge}" Margin="0,0,0,10"/>
+                    <TextBlock Text="{x:Static p:Resources.MaleRatio}" Margin="0,10,0,0"/>
+                    <TextBlock x:Name="MaleRatioTextBlock" Text="{Binding MaleRelation, StringFormat={}{0}%}" Margin="0,0,0,5"/>
+                    <TextBlock Text="{x:Static p:Resources.FemaleRatio}" Margin="0,5,0,0"/>
+                    <TextBlock x:Name="FemaleRatioTextBlock" Text="{Binding FemaleRelation, StringFormat={}{0}%}" Margin="0,0,0,10"/>
+                </StackPanel>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Button Content="{x:Static p:Resources.ReloadData}"
+                            Grid.Column="0"
+                            Margin="10" Padding="5"
+                            HorizontalAlignment="Left"
+                            Click="LoadDataButton_Click"/>
+                </Grid>
+            </Grid>
+        </Grid>
+        <StackPanel VerticalAlignment="Center"
+                    HorizontalAlignment="Stretch"
+                    x:Name="ErrorGrid"
+                    Grid.Column="0" Grid.Row="0"
+                    Orientation="Vertical"
+              Visibility="{Binding ErrorMessage, Converter={StaticResource StringToVisibilityConverter}}">
+            <Button x:Name="LoadDataButton"
+                    Content="{x:Static p:Resources.ReloadData}"
+                    Click="LoadDataButton_Click"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Margin="10" />
+            <TextBlock x:Name="ErrorTextBlock" Text="{Binding ErrorMessage}"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Margin="10"/>
+        </StackPanel>
+    </Grid>
+</UserControl>
