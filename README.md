@@ -5,6 +5,7 @@ verwenden:
 
 - **Swapi.Wpf** – native Windows-Anwendung mit WPF
 - **Swapi.Avalonia** – plattformübergreifende Anwendung mit Avalonia
+- **WPF_old** – das ursprüngliche WPF-Beispiel inklusive Backend und Tests
 
 Beide Projekte basieren auf .NET 10, nutzen MVVM mit
 `CommunityToolkit.Mvvm`, Nullable Reference Types und zentral verwaltete
@@ -25,6 +26,10 @@ Directory.Packages.props
 src/
 ├── Swapi.Wpf/
 └── Swapi.Avalonia/
+WPF_old/
+SwapiBackend/
+SwapiBackendTests/
+SwapiFrontEndWPF.Test/
 ```
 
 ## Entwickeln
@@ -44,4 +49,10 @@ WPF unter Windows starten:
 
 ```powershell
 dotnet run --project src/Swapi.Wpf/Swapi.Wpf.csproj
+```
+
+Das ursprüngliche WPF-Beispiel unter Windows starten:
+
+```powershell
+dotnet run --project WPF_old/WPF_old.csproj
 ```

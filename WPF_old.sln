@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SwapiFrontEndWPF", "SwapiFrontEndWPF\SwapiFrontEndWPF.csproj", "{25DE5592-C321-4CCE-9A5C-5CD48422FB91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPF_old", "WPF_old\WPF_old.csproj", "{25DE5592-C321-4CCE-9A5C-5CD48422FB91}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SwapiBackend", "SwapiBackend\SwapiBackend.csproj", "{3DA13A91-FE5E-4C5B-873C-A2BBC4D6C3FE}"
 EndProject

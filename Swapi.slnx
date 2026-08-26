@@ -3,4 +3,10 @@
     <Project Path="src/Swapi.Avalonia/Swapi.Avalonia.csproj" />
     <Project Path="src/Swapi.Wpf/Swapi.Wpf.csproj" />
   </Folder>
+  <Folder Name="/legacy/">
+    <Project Path="SwapiBackend/SwapiBackend.csproj" />
+    <Project Path="SwapiBackendTests/SwapiBackend.Tests.csproj" />
+    <Project Path="SwapiFrontEndWPF.Test/SwapiFrontEndWPF.Test.csproj" />
+    <Project Path="WPF_old/WPF_old.csproj" />
+  </Folder>
 </Solution>
