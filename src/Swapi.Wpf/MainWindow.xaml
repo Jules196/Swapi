@@ -6,7 +6,11 @@
         xmlns:vm="clr-namespace:Swapi.Wpf.ViewModels"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type=vm:MainViewModel, IsDesignTimeCreatable=False}"
-        Title="Swapi.Wpf" Height="450" Width="800">
+        Title="SWAPI Explorer"
+        Height="560"
+        Width="900"
+        MinHeight="420"
+        MinWidth="680">
     <Grid Margin="24">
         <Grid.RowDefinitions>
            <RowDefinition Height="Auto" />
@@ -17,14 +21,14 @@
         <DockPanel>
            <TextBlock FontSize="24"
                       FontWeight="SemiBold"
-                      Text="Star Wars characters" />
+                      Text="Star Wars Characters" />
            <Button HorizontalAlignment="Right"
                    Command="{Binding LoadPeopleCommand}"
                    Content="Refresh"
                    Padding="12,6" />
         </DockPanel>
 
-        <StackPanel Grid.Row="1" Margin="0,12">
+        <StackPanel Grid.Row="1" Margin="0,12,0,16">
            <ProgressBar Height="4"
                         IsIndeterminate="True"
                         Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}" />
@@ -33,13 +37,65 @@
                       Text="{Binding ErrorMessage}" />
         </StackPanel>
 
-        <ListBox Grid.Row="2"
-                ItemsSource="{Binding People}">
-           <ListBox.ItemTemplate>
-               <DataTemplate>
-                   <TextBlock Padding="8,4" Text="{Binding Name}" />
-               </DataTemplate>
-           </ListBox.ItemTemplate>
-        </ListBox>
+        <Grid Grid.Row="2">
+           <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="2*" />
+              <ColumnDefinition Width="20" />
+              <ColumnDefinition Width="320" />
+           </Grid.ColumnDefinitions>
+
+           <Border BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"
+                   BorderThickness="1"
+                   CornerRadius="6">
+              <ListBox ItemsSource="{Binding People}">
+                 <ListBox.ItemTemplate>
+                    <DataTemplate>
+                       <TextBlock Padding="12,8" Text="{Binding Name}" />
+                    </DataTemplate>
+                 </ListBox.ItemTemplate>
+              </ListBox>
+           </Border>
+
+           <Border Grid.Column="2"
+                   Padding="20"
+                   Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}"
+                   BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"
+                   BorderThickness="1"
+                   CornerRadius="6">
+              <StackPanel>
+                 <TextBlock FontSize="18"
+                            FontWeight="SemiBold"
+                            Text="Statistics" />
+
+                 <TextBlock Margin="0,18,0,6" Text="Current year" />
+                 <TextBox Text="{Binding CurrentYear, UpdateSourceTrigger=PropertyChanged}" />
+                 <TextBlock Margin="0,4,0,0"
+                            FontSize="12"
+                            Foreground="Firebrick"
+                            Text="{Binding CurrentYearError}"
+                            TextWrapping="Wrap" />
+
+                 <TextBlock Margin="0,18,0,4"
+                            Foreground="DimGray"
+                            Text="Average height" />
+                 <TextBlock FontSize="16" Text="{Binding AverageHeight}" />
+
+                 <TextBlock Margin="0,18,0,4"
+                            Foreground="DimGray"
+                            Text="Average age" />
+                 <TextBlock FontSize="16" Text="{Binding AverageAge}" />
+
+                 <TextBlock Margin="0,18,0,4"
+                            Foreground="DimGray"
+                            Text="Male ratio" />
+                 <TextBlock FontSize="16" Text="{Binding MalePercentage}" />
+
+                 <TextBlock Margin="0,18,0,4"
+                            Foreground="DimGray"
+                            Text="Female ratio" />
+                 <TextBlock FontSize="16" Text="{Binding FemalePercentage}" />
+              </StackPanel>
+           </Border>
+        </Grid>
     </Grid>
 </Window>

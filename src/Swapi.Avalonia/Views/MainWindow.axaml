@@ -3,11 +3,15 @@
         xmlns:vm="using:Swapi.Avalonia.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="560"
         x:Class="Swapi.Avalonia.Views.MainWindow"
         x:DataType="vm:MainViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="Swapi.Avalonia">
+        Title="SWAPI Explorer"
+        Width="900"
+        Height="560"
+        MinWidth="680"
+        MinHeight="420">
 
     <Design.DataContext>
         <x:Null />
@@ -17,14 +21,14 @@
         <Grid ColumnDefinitions="*,Auto">
             <TextBlock FontSize="24"
                        FontWeight="SemiBold"
-                       Text="Star Wars characters" />
+                       Text="Star Wars Characters" />
             <Button Grid.Column="1"
                     Command="{Binding LoadPeopleCommand}"
                     Content="Refresh"
                     Padding="12,6" />
         </Grid>
 
-        <StackPanel Grid.Row="1" Margin="0,12">
+        <StackPanel Grid.Row="1" Margin="0,12,0,16">
             <ProgressBar Height="4"
                          IsIndeterminate="True"
                          IsVisible="{Binding IsBusy}" />
@@ -33,14 +37,59 @@
                        Text="{Binding ErrorMessage}" />
         </StackPanel>
 
-        <ListBox Grid.Row="2"
-                 ItemsSource="{Binding People}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Padding="8,4" Text="{Binding Name}" />
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <Grid Grid.Row="2" ColumnDefinitions="2*,320" ColumnSpacing="20">
+            <Border BorderBrush="{DynamicResource ThemeBorderLowBrush}"
+                   BorderThickness="1"
+                   CornerRadius="6">
+                <ListBox ItemsSource="{Binding People}">
+                   <ListBox.ItemTemplate>
+                       <DataTemplate>
+                           <TextBlock Padding="12,8" Text="{Binding Name}" />
+                       </DataTemplate>
+                   </ListBox.ItemTemplate>
+                </ListBox>
+            </Border>
+
+            <Border Grid.Column="1"
+                   Padding="20"
+                   Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+                   BorderBrush="{DynamicResource ThemeBorderLowBrush}"
+                   BorderThickness="1"
+                   CornerRadius="6">
+                <StackPanel Spacing="6">
+                   <TextBlock FontSize="18"
+                              FontWeight="SemiBold"
+                              Text="Statistics" />
+
+                   <TextBlock Margin="0,12,0,0" Text="Current year" />
+                   <TextBox Text="{Binding CurrentYear}" />
+                   <TextBlock FontSize="12"
+                              Foreground="Firebrick"
+                              Text="{Binding CurrentYearError}"
+                              TextWrapping="Wrap" />
+
+                   <TextBlock Margin="0,12,0,0"
+                              Foreground="{DynamicResource ThemeForegroundLowBrush}"
+                              Text="Average height" />
+                   <TextBlock FontSize="16" Text="{Binding AverageHeight}" />
+
+                   <TextBlock Margin="0,12,0,0"
+                              Foreground="{DynamicResource ThemeForegroundLowBrush}"
+                              Text="Average age" />
+                   <TextBlock FontSize="16" Text="{Binding AverageAge}" />
+
+                   <TextBlock Margin="0,12,0,0"
+                              Foreground="{DynamicResource ThemeForegroundLowBrush}"
+                              Text="Male ratio" />
+                   <TextBlock FontSize="16" Text="{Binding MalePercentage}" />
+
+                   <TextBlock Margin="0,12,0,0"
+                              Foreground="{DynamicResource ThemeForegroundLowBrush}"
+                              Text="Female ratio" />
+                   <TextBlock FontSize="16" Text="{Binding FemalePercentage}" />
+                </StackPanel>
+            </Border>
+        </Grid>
     </Grid>
 
 </Window>
