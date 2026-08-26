@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
+<ItemGroup>
+	<InternalsVisibleTo Include="SwapiBackend.Tests" />
+</ItemGroup>
+<ItemGroup>
+	<InternalsVisibleTo Include="SwapiFrontEndWPF.Test" />
+</ItemGroup>
+</Project>
