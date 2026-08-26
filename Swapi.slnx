@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Swapi.Avalonia/Swapi.Avalonia.csproj" />
+    <Project Path="src/Swapi.Wpf/Swapi.Wpf.csproj" />
+  </Folder>
+</Solution>
