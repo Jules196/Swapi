@@ -10,13 +10,37 @@
         Title="Swapi.Avalonia">
 
     <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-        <vm:MainViewModel />
+        <x:Null />
     </Design.DataContext>
 
-    <TextBox Text="{Binding Greeting}"
-             HorizontalAlignment="Center"
-             VerticalAlignment="Center" />
+    <Grid Margin="24" RowDefinitions="Auto,Auto,*">
+        <Grid ColumnDefinitions="*,Auto">
+            <TextBlock FontSize="24"
+                       FontWeight="SemiBold"
+                       Text="Star Wars characters" />
+            <Button Grid.Column="1"
+                    Command="{Binding LoadPeopleCommand}"
+                    Content="Refresh"
+                    Padding="12,6" />
+        </Grid>
+
+        <StackPanel Grid.Row="1" Margin="0,12">
+            <ProgressBar Height="4"
+                         IsIndeterminate="True"
+                         IsVisible="{Binding IsBusy}" />
+            <TextBlock Margin="0,8,0,0"
+                       Foreground="Firebrick"
+                       Text="{Binding ErrorMessage}" />
+        </StackPanel>
+
+        <ListBox Grid.Row="2"
+                 ItemsSource="{Binding People}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Padding="8,4" Text="{Binding Name}" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
 
 </Window>

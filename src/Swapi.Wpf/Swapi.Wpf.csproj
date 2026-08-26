@@ -11,4 +11,8 @@
     <PackageReference Include="CommunityToolkit.Mvvm" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\SwapiBackend\SwapiBackend.csproj" />
+  </ItemGroup>
+
 </Project>

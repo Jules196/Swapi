@@ -1,5 +1,5 @@
-﻿using System.Configuration;
-using System.Data;
+﻿using Swapi.Wpf.ViewModels;
+using SwapiBackend;
 using System.Windows;
 
 namespace Swapi.Wpf;
@@ -9,5 +9,18 @@ namespace Swapi.Wpf;
 /// </summary>
 public partial class App : Application
 {
-}
+    protected override void OnStartup(StartupEventArgs e)
+    {
+        base.OnStartup(e);
 
+        MainViewModel viewModel = new(new StarWarsData());
+        MainWindow mainWindow = new()
+        {
+            DataContext = viewModel,
+        };
+
+        MainWindow = mainWindow;
+        mainWindow.Show();
+        viewModel.LoadPeopleCommand.Execute(null);
+    }
+}

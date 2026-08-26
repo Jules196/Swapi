@@ -5,14 +5,41 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:Swapi.Wpf.ViewModels"
         mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=vm:MainViewModel, IsDesignTimeCreatable=False}"
         Title="Swapi.Wpf" Height="450" Width="800">
-    <Window.DataContext>
-        <vm:MainViewModel />
-    </Window.DataContext>
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+           <RowDefinition Height="Auto" />
+           <RowDefinition Height="Auto" />
+           <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-    <Grid>
-        <TextBox Text="{Binding Greeting, UpdateSourceTrigger=PropertyChanged}"
-                 HorizontalAlignment="Center"
-                 VerticalAlignment="Center" />
+        <DockPanel>
+           <TextBlock FontSize="24"
+                      FontWeight="SemiBold"
+                      Text="Star Wars characters" />
+           <Button HorizontalAlignment="Right"
+                   Command="{Binding LoadPeopleCommand}"
+                   Content="Refresh"
+                   Padding="12,6" />
+        </DockPanel>
+
+        <StackPanel Grid.Row="1" Margin="0,12">
+           <ProgressBar Height="4"
+                        IsIndeterminate="True"
+                        Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}" />
+           <TextBlock Margin="0,8,0,0"
+                      Foreground="Firebrick"
+                      Text="{Binding ErrorMessage}" />
+        </StackPanel>
+
+        <ListBox Grid.Row="2"
+                ItemsSource="{Binding People}">
+           <ListBox.ItemTemplate>
+               <DataTemplate>
+                   <TextBlock Padding="8,4" Text="{Binding Name}" />
+               </DataTemplate>
+           </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </Window>
