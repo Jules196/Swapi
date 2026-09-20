@@ -4,6 +4,10 @@
              RequestedThemeVariant="Default">
              <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
+    <!--
+        Application level styles. The startup logic lives in Program.cs and
+        App.axaml.cs; this file only declares the theme.
+    -->
     <Application.Styles>
         <FluentTheme />
     </Application.Styles>

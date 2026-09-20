@@ -11,6 +11,11 @@
         Width="900"
         MinHeight="420"
         MinWidth="680">
+    <!--
+        Layout of the sample: a header row, a status row and the content row
+        with the character list and the statistics panel. All values are bound
+        to the MainViewModel that is injected in the code-behind.
+    -->
     <Grid Margin="24">
         <Grid.RowDefinitions>
            <RowDefinition Height="Auto" />
@@ -18,6 +23,7 @@
            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
+        <!-- Header with the title and the refresh button. -->
         <DockPanel>
            <TextBlock FontSize="24"
                       FontWeight="SemiBold"
@@ -28,6 +34,7 @@
                    Padding="12,6" />
         </DockPanel>
 
+        <!-- Status area: progress bar while loading plus the error message. -->
         <StackPanel Grid.Row="1" Margin="0,12,0,16">
            <ProgressBar Height="4"
                         IsIndeterminate="True"
@@ -44,6 +51,7 @@
               <ColumnDefinition Width="320" />
            </Grid.ColumnDefinitions>
 
+           <!-- Left column: list of all loaded characters. -->
            <Border BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"
                    BorderThickness="1"
                    CornerRadius="6">
@@ -56,6 +64,7 @@
               </ListBox>
            </Border>
 
+           <!-- Right column: editable reference year and the calculated statistics. -->
            <Border Grid.Column="2"
                    Padding="20"
                    Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}"

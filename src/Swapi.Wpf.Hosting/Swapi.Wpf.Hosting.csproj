@@ -1,25 +1,36 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <!-- Windows GUI application: no console window is allocated. -->
     <OutputType>WinExe</OutputType>
     <TargetFramework>net10.0-windows</TargetFramework>
+    <!-- Allows building (not running) this WPF project on non-Windows CI agents. -->
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
     <UseWPF>true</UseWPF>
-    <!-- The entry point lives in Program.cs so that the generic host can be built first. -->
+    <!--
+      The entry point lives in Program.cs so that the generic host can be built
+      before WPF starts. Therefore App.xaml must not be treated as the generated
+      ApplicationDefinition (which would create a second Main method); it is
+      compiled as a normal page and loaded explicitly via InitializeComponent.
+    -->
     <EnableDefaultApplicationDefinition>false</EnableDefaultApplicationDefinition>
     <StartupObject>Swapi.Wpf.Hosting.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- Configuration file read by the host at startup. -->
     <None Update="appsettings.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
   <ItemGroup>
+    <!-- MVVM source generators for observable properties and commands. -->
     <PackageReference Include="CommunityToolkit.Mvvm" />
+    <!-- Generic host: configuration, logging and dependency injection. -->
     <PackageReference Include="Microsoft.Extensions.Hosting" />
   </ItemGroup>
 
   <ItemGroup>
+    <!-- Shared backend that reads the Star Wars data. -->
     <ProjectReference Include="..\..\SwapiBackend\SwapiBackend.csproj" />
   </ItemGroup>
 

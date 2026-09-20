@@ -2,7 +2,12 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Swapi.Wpf.Hosting">
+    <!--
+        Application level resources. The startup logic lives in Program.cs and
+        App.xaml.cs; this file only declares shared resources.
+    -->
     <Application.Resources>
+        <!-- Used by the main window to show the progress bar while loading. -->
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </Application.Resources>
 </Application>

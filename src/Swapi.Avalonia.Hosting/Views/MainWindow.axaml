@@ -13,11 +13,20 @@
         MinWidth="680"
         MinHeight="420">
 
+    <!--
+        The runtime data context is set in the code-behind from the view model
+        injected by the host, so the designer uses no design time instance.
+    -->
     <Design.DataContext>
         <x:Null />
     </Design.DataContext>
 
+    <!--
+        Layout of the sample: a header row, a status row and the content row
+        with the character list and the statistics panel.
+    -->
     <Grid Margin="24" RowDefinitions="Auto,Auto,*">
+        <!-- Header with the title and the refresh button. -->
         <Grid ColumnDefinitions="*,Auto">
             <TextBlock FontSize="24"
                        FontWeight="SemiBold"
@@ -28,6 +37,7 @@
                     Padding="12,6" />
         </Grid>
 
+        <!-- Status area: progress bar while loading plus the error message. -->
         <StackPanel Grid.Row="1" Margin="0,12,0,16">
             <ProgressBar Height="4"
                          IsIndeterminate="True"
@@ -38,6 +48,7 @@
         </StackPanel>
 
         <Grid Grid.Row="2" ColumnDefinitions="2*,320" ColumnSpacing="20">
+            <!-- Left column: list of all loaded characters. -->
             <Border BorderBrush="{DynamicResource ThemeBorderLowBrush}"
                    BorderThickness="1"
                    CornerRadius="6">
@@ -50,6 +61,7 @@
                 </ListBox>
             </Border>
 
+            <!-- Right column: editable reference year and the calculated statistics. -->
             <Border Grid.Column="1"
                    Padding="20"
                    Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
