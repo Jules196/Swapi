@@ -1,0 +1,107 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Swapi.Avalonia.Hosting.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="560"
+        x:Class="Swapi.Avalonia.Hosting.Views.MainWindow"
+        x:DataType="vm:MainViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="SWAPI Explorer (Avalonia + ApplicationBuilder)"
+        Width="900"
+        Height="560"
+        MinWidth="680"
+        MinHeight="420">
+
+    <!--
+        The runtime data context is set in the code-behind from the view model
+        injected by the host, so the designer uses no design time instance.
+    -->
+    <Design.DataContext>
+        <x:Null />
+    </Design.DataContext>
+
+    <!--
+        Layout of the sample: a header row, a status row and the content row
+        with the character list and the statistics panel.
+    -->
+    <Grid Margin="24" RowDefinitions="Auto,Auto,*">
+        <!-- Header with the title and the refresh button. -->
+        <Grid ColumnDefinitions="*,Auto">
+            <TextBlock FontSize="24"
+                       FontWeight="SemiBold"
+                       Text="Star Wars Characters" />
+            <Button Grid.Column="1"
+                    Command="{Binding LoadPeopleCommand}"
+                    Content="Refresh"
+                    Padding="12,6" />
+        </Grid>
+
+        <!-- Status area: progress bar while loading plus the error message. -->
+        <StackPanel Grid.Row="1" Margin="0,12,0,16">
+            <ProgressBar Height="4"
+                         IsIndeterminate="True"
+                         IsVisible="{Binding IsBusy}" />
+            <TextBlock Margin="0,8,0,0"
+                       Foreground="Firebrick"
+                       Text="{Binding ErrorMessage}" />
+        </StackPanel>
+
+        <Grid Grid.Row="2" ColumnDefinitions="2*,320" ColumnSpacing="20">
+            <!-- Left column: list of all loaded characters. -->
+            <Border BorderBrush="{DynamicResource ThemeBorderLowBrush}"
+                   BorderThickness="1"
+                   CornerRadius="6">
+                <ListBox ItemsSource="{Binding People}">
+                   <ListBox.ItemTemplate>
+                       <DataTemplate>
+                           <TextBlock Padding="12,8" Text="{Binding Name}" />
+                       </DataTemplate>
+                   </ListBox.ItemTemplate>
+                </ListBox>
+            </Border>
+
+            <!-- Right column: editable reference year and the calculated statistics. -->
+            <Border Grid.Column="1"
+                   Padding="20"
+                   Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+                   BorderBrush="{DynamicResource ThemeBorderLowBrush}"
+                   BorderThickness="1"
+                   CornerRadius="6">
+                <StackPanel Spacing="6">
+                   <TextBlock FontSize="18"
+                              FontWeight="SemiBold"
+                              Text="Statistics" />
+
+                   <TextBlock Margin="0,12,0,0" Text="Current year" />
+                   <TextBox Text="{Binding CurrentYear}" />
+                   <TextBlock FontSize="12"
+                              Foreground="Firebrick"
+                              Text="{Binding CurrentYearError}"
+                              TextWrapping="Wrap" />
+
+                   <TextBlock Margin="0,12,0,0"
+                              Foreground="{DynamicResource ThemeForegroundLowBrush}"
+                              Text="Average height" />
+                   <TextBlock FontSize="16" Text="{Binding AverageHeight}" />
+
+                   <TextBlock Margin="0,12,0,0"
+                              Foreground="{DynamicResource ThemeForegroundLowBrush}"
+                              Text="Average age" />
+                   <TextBlock FontSize="16" Text="{Binding AverageAge}" />
+
+                   <TextBlock Margin="0,12,0,0"
+                              Foreground="{DynamicResource ThemeForegroundLowBrush}"
+                              Text="Male ratio" />
+                   <TextBlock FontSize="16" Text="{Binding MalePercentage}" />
+
+                   <TextBlock Margin="0,12,0,0"
+                              Foreground="{DynamicResource ThemeForegroundLowBrush}"
+                              Text="Female ratio" />
+                   <TextBlock FontSize="16" Text="{Binding FemalePercentage}" />
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+
+</Window>

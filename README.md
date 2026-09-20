@@ -1,13 +1,15 @@
 # Swapi
 
-Zwei parallele Desktop-Anwendungen, die denselben modernen .NET-Projektstandard
+Parallele Desktop-Anwendungen, die denselben modernen .NET-Projektstandard
 verwenden:
 
 - **Swapi.Wpf** – native Windows-Anwendung mit WPF
 - **Swapi.Avalonia** – plattformübergreifende Anwendung mit Avalonia
+- **Swapi.Wpf.Hosting** – dieselbe WPF-Anwendung, aber mit `HostApplicationBuilder`
+- **Swapi.Avalonia.Hosting** – dieselbe Avalonia-Anwendung, aber mit `HostApplicationBuilder`
 - **WPF_old** – das ursprüngliche WPF-Beispiel inklusive Backend und Tests
 
-Beide Projekte basieren auf .NET 10, nutzen MVVM mit
+Die Projekte basieren auf .NET 10, nutzen MVVM mit
 `CommunityToolkit.Mvvm`, Nullable Reference Types und zentral verwaltete
 Paketversionen.
 
@@ -25,7 +27,9 @@ Directory.Build.props
 Directory.Packages.props
 src/
 ├── Swapi.Wpf/
-└── Swapi.Avalonia/
+├── Swapi.Wpf.Hosting/
+├── Swapi.Avalonia/
+└── Swapi.Avalonia.Hosting/
 WPF_old/
 SwapiBackend/
 SwapiBackendTests/
@@ -55,4 +59,31 @@ Das ursprüngliche WPF-Beispiel unter Windows starten:
 
 ```powershell
 dotnet run --project WPF_old/WPF_old.csproj
+```
+
+## Beispiele mit dem ApplicationBuilder
+
+`Swapi.Wpf.Hosting` und `Swapi.Avalonia.Hosting` zeigen dieselbe Oberfläche,
+bauen die Anwendung aber mit dem `HostApplicationBuilder`
+(`Host.CreateApplicationBuilder`) aus `Microsoft.Extensions.Hosting` auf:
+
+- Der Einstiegspunkt liegt in `Program.cs`; die UI wird erst nach dem Aufbau des
+  Hosts gestartet.
+- `ISwapiPersons`, das `MainViewModel`, das Hauptfenster und die
+  `Application`-Klasse werden über Dependency Injection registriert und
+  aufgelöst.
+- Logging (`ILogger<T>`) und Konfiguration stehen zur Verfügung; die Quelle der
+  Star-Wars-Daten wird über den Abschnitt `Swapi:SourceUri` aus
+  `appsettings.json` gebunden (leerer Wert = Standard-Endpunkt).
+
+Avalonia-Beispiel starten:
+
+```bash
+dotnet run --project src/Swapi.Avalonia.Hosting/Swapi.Avalonia.Hosting.csproj
+```
+
+WPF-Beispiel unter Windows starten:
+
+```powershell
+dotnet run --project src/Swapi.Wpf.Hosting/Swapi.Wpf.Hosting.csproj
 ```
