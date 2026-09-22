@@ -8,9 +8,9 @@
         x:DataType="vm:MainViewModel"
         Icon="/Assets/avalonia-logo.ico"
         Title="SWAPI Explorer (Avalonia + ApplicationBuilder)"
-        Width="900"
+        Width="980"
         Height="560"
-        MinWidth="680"
+        MinWidth="820"
         MinHeight="420">
 
     <!--
@@ -25,13 +25,17 @@
         Layout of the sample: a header row, a status row and the content row
         with the character list and the statistics panel.
     -->
-    <Grid Margin="24" RowDefinitions="Auto,Auto,*">
-        <!-- Header with the title and the refresh button. -->
+    <Grid Margin="{DynamicResource LayoutMargin}" RowDefinitions="Auto,Auto,*">
+        <!-- Header with the title, the appearance selection and the refresh button. -->
         <Grid ColumnDefinitions="*,Auto">
-            <TextBlock FontSize="24"
+            <TextBlock FontSize="{DynamicResource TitleFontSize}"
                        FontWeight="SemiBold"
+                       Foreground="{DynamicResource AccentBrush}"
                        Text="Star Wars Characters" />
-            <!-- Theme selection: switches the theme variant at runtime. -->
+            <!--
+                Appearance selection: theme (colours), style (accents) and
+                metrics (sizes and spacings) are switched independently.
+            -->
             <StackPanel Grid.Column="1"
                         Orientation="Horizontal"
                         Spacing="8">
@@ -42,16 +46,33 @@
                           Width="110"
                           VerticalAlignment="Center"
                           SelectionChanged="OnThemeSelectionChanged" />
+                <TextBlock VerticalAlignment="Center"
+                           Foreground="{DynamicResource SubtleForegroundBrush}"
+                           Text="Style" />
+                <ComboBox x:Name="StyleSelector"
+                          Width="110"
+                          VerticalAlignment="Center"
+                          SelectionChanged="OnStyleSelectionChanged" />
+                <TextBlock VerticalAlignment="Center"
+                           Foreground="{DynamicResource SubtleForegroundBrush}"
+                           Text="Metrics" />
+                <ComboBox x:Name="MetricsSelector"
+                          Width="120"
+                          VerticalAlignment="Center"
+                          SelectionChanged="OnMetricsSelectionChanged" />
                 <Button Margin="4,0,0,0"
+                        Background="{DynamicResource AccentBrush}"
+                        Foreground="{DynamicResource AccentForegroundBrush}"
                         Command="{Binding LoadPeopleCommand}"
                         Content="Refresh"
-                        Padding="12,6" />
+                        Padding="{DynamicResource ControlPadding}" />
             </StackPanel>
         </Grid>
 
         <!-- Status area: progress bar while loading plus the error message. -->
         <StackPanel Grid.Row="1" Margin="0,12,0,16">
             <ProgressBar Height="4"
+                         Foreground="{DynamicResource AccentBrush}"
                          IsIndeterminate="True"
                          IsVisible="{Binding IsBusy}" />
             <TextBlock Margin="0,8,0,0"
@@ -63,11 +84,11 @@
             <!-- Left column: list of all loaded characters. -->
             <Border BorderBrush="{DynamicResource CardBorderBrush}"
                    BorderThickness="1"
-                   CornerRadius="6">
+                   CornerRadius="{DynamicResource ControlCornerRadius}">
                 <ListBox ItemsSource="{Binding People}">
                    <ListBox.ItemTemplate>
                        <DataTemplate>
-                           <TextBlock Padding="12,8" Text="{Binding Name}" />
+                           <TextBlock Padding="{DynamicResource ItemPadding}" Text="{Binding Name}" />
                        </DataTemplate>
                    </ListBox.ItemTemplate>
                 </ListBox>
@@ -75,42 +96,43 @@
 
             <!-- Right column: editable reference year and the calculated statistics. -->
             <Border Grid.Column="1"
-                   Padding="20"
+                   Padding="{DynamicResource CardPadding}"
                    Background="{DynamicResource CardBackgroundBrush}"
                    BorderBrush="{DynamicResource CardBorderBrush}"
                    BorderThickness="1"
-                   CornerRadius="6">
-                <StackPanel Spacing="6">
-                   <TextBlock FontSize="18"
+                   CornerRadius="{DynamicResource ControlCornerRadius}">
+                <StackPanel Spacing="{DynamicResource StackSpacing}">
+                   <TextBlock FontSize="{DynamicResource SectionFontSize}"
                               FontWeight="SemiBold"
+                              Foreground="{DynamicResource AccentBrush}"
                               Text="Statistics" />
 
-                   <TextBlock Margin="0,12,0,0" Text="Current year" />
-                   <TextBox Text="{Binding CurrentYear}" />
-                   <TextBlock FontSize="12"
+                   <TextBlock Margin="{DynamicResource SectionMargin}" Text="Current year" />
+                   <TextBox Padding="{DynamicResource ControlPadding}" Text="{Binding CurrentYear}" />
+                   <TextBlock FontSize="{DynamicResource CaptionFontSize}"
                               Foreground="{DynamicResource ErrorForegroundBrush}"
                               Text="{Binding CurrentYearError}"
                               TextWrapping="Wrap" />
 
-                   <TextBlock Margin="0,12,0,0"
+                   <TextBlock Margin="{DynamicResource SectionMargin}"
                               Foreground="{DynamicResource SubtleForegroundBrush}"
                               Text="Average height" />
-                   <TextBlock FontSize="16" Text="{Binding AverageHeight}" />
+                   <TextBlock FontSize="{DynamicResource ValueFontSize}" Text="{Binding AverageHeight}" />
 
-                   <TextBlock Margin="0,12,0,0"
+                   <TextBlock Margin="{DynamicResource SectionMargin}"
                               Foreground="{DynamicResource SubtleForegroundBrush}"
                               Text="Average age" />
-                   <TextBlock FontSize="16" Text="{Binding AverageAge}" />
+                   <TextBlock FontSize="{DynamicResource ValueFontSize}" Text="{Binding AverageAge}" />
 
-                   <TextBlock Margin="0,12,0,0"
+                   <TextBlock Margin="{DynamicResource SectionMargin}"
                               Foreground="{DynamicResource SubtleForegroundBrush}"
                               Text="Male ratio" />
-                   <TextBlock FontSize="16" Text="{Binding MalePercentage}" />
+                   <TextBlock FontSize="{DynamicResource ValueFontSize}" Text="{Binding MalePercentage}" />
 
-                   <TextBlock Margin="0,12,0,0"
+                   <TextBlock Margin="{DynamicResource SectionMargin}"
                               Foreground="{DynamicResource SubtleForegroundBrush}"
                               Text="Female ratio" />
-                   <TextBlock FontSize="16" Text="{Binding FemalePercentage}" />
+                   <TextBlock FontSize="{DynamicResource ValueFontSize}" Text="{Binding FemalePercentage}" />
                 </StackPanel>
             </Border>
         </Grid>

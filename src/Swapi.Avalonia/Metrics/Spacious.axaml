@@ -1,0 +1,19 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="using:System">
+    <!-- Sizes and spacings of the spacious metrics. Every metric set defines the same keys. -->
+    <sys:Double x:Key="TitleFontSize">28</sys:Double>
+    <sys:Double x:Key="SectionFontSize">22</sys:Double>
+    <sys:Double x:Key="ValueFontSize">19</sys:Double>
+    <sys:Double x:Key="BodyFontSize">15</sys:Double>
+    <sys:Double x:Key="CaptionFontSize">13</sys:Double>
+
+    <Thickness x:Key="LayoutMargin">36</Thickness>
+    <Thickness x:Key="CardPadding">28</Thickness>
+    <Thickness x:Key="ControlPadding">10,8</Thickness>
+    <Thickness x:Key="ItemPadding">16,12</Thickness>
+    <Thickness x:Key="SectionMargin">0,26,0,8</Thickness>
+
+    <sys:Double x:Key="StackSpacing">10</sys:Double>
+    <CornerRadius x:Key="ControlCornerRadius">10</CornerRadius>
+</ResourceDictionary>

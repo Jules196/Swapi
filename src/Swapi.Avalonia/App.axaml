@@ -15,6 +15,12 @@
                 dictionary for the active variant, so views only need to
                 reference the keys with DynamicResource.
             -->
+            <ResourceDictionary.MergedDictionaries>
+                <!-- Start-up accents and metrics; ThemeManager exchanges these at runtime. -->
+                <ResourceInclude Source="avares://Swapi.Avalonia/Styles/Classic.axaml" />
+                <ResourceInclude Source="avares://Swapi.Avalonia/Metrics/Comfortable.axaml" />
+            </ResourceDictionary.MergedDictionaries>
+
             <ResourceDictionary.ThemeDictionaries>
                 <ResourceDictionary x:Key="Light">
                     <SolidColorBrush x:Key="CardBackgroundBrush" Color="#FFF6F7F9" />

@@ -13,24 +13,35 @@ Die Projekte basieren auf .NET 10, nutzen MVVM mit
 `CommunityToolkit.Mvvm`, Nullable Reference Types und zentral verwaltete
 Paketversionen.
 
-## Theming (Light/Dark)
+## Erscheinungsbild (Theme, Style, Metriken)
 
-Alle vier Beispiele in `src/` lassen sich zur Laufzeit zwischen hellem und
-dunklem Design umschalten. Die Auswahl steht als Kombinationsfeld oben rechts
-im Fenster.
+Alle vier Beispiele in `src/` lassen sich zur Laufzeit in drei voneinander
+unabhängigen Achsen umschalten. Die Auswahl steht als Kombinationsfelder oben
+rechts im Fenster.
 
-- **Avalonia**: Die Anwendung nutzt die `ThemeVariant`-Unterstützung des
-  Fluent-Themes. `Theming/ThemeManager.cs` setzt
+- **Theme** (`Themes/`, Avalonia: `ThemeDictionaries` in `App.axaml`) – die
+  Grundfarben (`Light`/`Dark`, in Avalonia zusätzlich `System`).
+- **Style** (`Styles/Classic`, `Ocean`, `Sunset`) – die Akzentfarben
+  (`AccentBrush`, `AccentForegroundBrush`, `AccentSubtleBrush`), die für
+  Überschriften, Schaltflächen und den Fortschrittsbalken verwendet werden.
+- **Metriken** (`Metrics/Compact`, `Comfortable`, `Spacious`) – Schriftgrößen,
+  Abstände, Innenabstände und Eckradien (z. B. `TitleFontSize`, `CardPadding`,
+  `SectionMargin`, `ControlCornerRadius`).
+
+Jede Variante einer Achse definiert dieselben Schlüssel, sodass sie beliebig
+kombiniert werden können. `Theming/ThemeManager.cs` bietet je eine
+`Apply`-Überladung für `AppTheme`, `AppStyle` und `AppMetrics`.
+
+- **Avalonia**: Die Farben nutzen die `ThemeVariant`-Unterstützung des
+  Fluent-Themes; `ThemeManager.Apply(AppTheme)` setzt
   `Application.Current.RequestedThemeVariant` auf `Default` (System), `Light`
-  oder `Dark`. Eigene Farben liegen in `App.axaml` in
-  `ResourceDictionary.ThemeDictionaries` und werden per `DynamicResource`
-  verwendet.
-- **WPF**: WPF bringt kein eigenes Theming mit. Die Farben sind deshalb in
-  `Themes/Light.xaml` und `Themes/Dark.xaml` als Pinsel mit identischen
-  Schlüsseln definiert. `Theming/ThemeManager.cs` tauscht das zusammengeführte
-  Wörterbuch der Anwendung aus; da die Views die Pinsel mit `DynamicResource`
-  referenzieren, wirkt der Wechsel sofort. Implizite Styles in `App.xaml`
-  sorgen dafür, dass auch die Standardsteuerelemente dem Theme folgen.
+  oder `Dark`. Style- und Metrik-Wörterbücher werden als `ResourceInclude` in
+  `Application.Resources.MergedDictionaries` ausgetauscht.
+- **WPF**: WPF bringt kein eigenes Theming mit. Alle Werte sind deshalb je
+  Variante als Ressourcen-Wörterbuch definiert; der `ThemeManager` ersetzt das
+  jeweils zusammengeführte Wörterbuch der Anwendung. Da die Views die Werte mit
+  `DynamicResource` referenzieren, wirkt der Wechsel sofort. Implizite Styles in
+  `App.xaml` sorgen dafür, dass auch die Standardsteuerelemente folgen.
 
 ## Voraussetzungen
 
