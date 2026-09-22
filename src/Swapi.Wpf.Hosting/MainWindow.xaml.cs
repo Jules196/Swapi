@@ -24,10 +24,16 @@ public partial class MainWindow : Window
         // All bindings in the XAML resolve against this view model.
         DataContext = viewModel;
 
-        // Fill the theme selector with the available themes and preselect the
-        // theme that is currently applied.
+        // Fill the selectors with the available variants and preselect the
+        // theme, style and metrics that are currently applied.
         ThemeSelector.ItemsSource = Enum.GetValues<AppTheme>();
         ThemeSelector.SelectedItem = ThemeManager.CurrentTheme;
+
+        StyleSelector.ItemsSource = Enum.GetValues<AppStyle>();
+        StyleSelector.SelectedItem = ThemeManager.CurrentStyle;
+
+        MetricsSelector.ItemsSource = Enum.GetValues<AppMetrics>();
+        MetricsSelector.SelectedItem = ThemeManager.CurrentMetrics;
     }
 
     /// <summary>
@@ -41,6 +47,32 @@ public partial class MainWindow : Window
         if (ThemeSelector.SelectedItem is AppTheme theme)
         {
             ThemeManager.Apply(theme);
+        }
+    }
+
+    /// <summary>
+    /// Applies the accent style chosen in the combo box.
+    /// </summary>
+    /// <param name="sender">The style combo box.</param>
+    /// <param name="e">Selection data provided by WPF.</param>
+    private void OnStyleSelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (StyleSelector.SelectedItem is AppStyle style)
+        {
+            ThemeManager.Apply(style);
+        }
+    }
+
+    /// <summary>
+    /// Applies the metrics (font sizes, paddings, margins) chosen in the combo box.
+    /// </summary>
+    /// <param name="sender">The metrics combo box.</param>
+    /// <param name="e">Selection data provided by WPF.</param>
+    private void OnMetricsSelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (MetricsSelector.SelectedItem is AppMetrics metrics)
+        {
+            ThemeManager.Apply(metrics);
         }
     }
 }
