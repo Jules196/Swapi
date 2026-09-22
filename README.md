@@ -13,6 +13,25 @@ Die Projekte basieren auf .NET 10, nutzen MVVM mit
 `CommunityToolkit.Mvvm`, Nullable Reference Types und zentral verwaltete
 Paketversionen.
 
+## Theming (Light/Dark)
+
+Alle vier Beispiele in `src/` lassen sich zur Laufzeit zwischen hellem und
+dunklem Design umschalten. Die Auswahl steht als Kombinationsfeld oben rechts
+im Fenster.
+
+- **Avalonia**: Die Anwendung nutzt die `ThemeVariant`-Unterstützung des
+  Fluent-Themes. `Theming/ThemeManager.cs` setzt
+  `Application.Current.RequestedThemeVariant` auf `Default` (System), `Light`
+  oder `Dark`. Eigene Farben liegen in `App.axaml` in
+  `ResourceDictionary.ThemeDictionaries` und werden per `DynamicResource`
+  verwendet.
+- **WPF**: WPF bringt kein eigenes Theming mit. Die Farben sind deshalb in
+  `Themes/Light.xaml` und `Themes/Dark.xaml` als Pinsel mit identischen
+  Schlüsseln definiert. `Theming/ThemeManager.cs` tauscht das zusammengeführte
+  Wörterbuch der Anwendung aus; da die Views die Pinsel mit `DynamicResource`
+  referenzieren, wirkt der Wechsel sofort. Implizite Styles in `App.xaml`
+  sorgen dafür, dass auch die Standardsteuerelemente dem Theme folgen.
+
 ## Voraussetzungen
 
 - [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)

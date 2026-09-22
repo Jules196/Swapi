@@ -5,10 +5,34 @@
              <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
     <!--
-        Application level styles. The startup logic lives in Program.cs and
-        App.axaml.cs; this file only declares the theme.
+        Application level styles and resources. The startup logic lives in
+        Program.cs and App.axaml.cs; this file only declares the theme.
     -->
     <Application.Styles>
         <FluentTheme />
     </Application.Styles>
+
+    <Application.Resources>
+        <ResourceDictionary>
+            <!--
+                Own colours per theme variant. Avalonia picks the matching
+                dictionary for the active variant, so views only need to
+                reference the keys with DynamicResource.
+            -->
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="CardBackgroundBrush" Color="#FFF6F7F9" />
+                    <SolidColorBrush x:Key="CardBorderBrush" Color="#FFD0D3D8" />
+                    <SolidColorBrush x:Key="SubtleForegroundBrush" Color="#FF5F6368" />
+                    <SolidColorBrush x:Key="ErrorForegroundBrush" Color="#FFB3261E" />
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Dark">
+                    <SolidColorBrush x:Key="CardBackgroundBrush" Color="#FF26262B" />
+                    <SolidColorBrush x:Key="CardBorderBrush" Color="#FF44464F" />
+                    <SolidColorBrush x:Key="SubtleForegroundBrush" Color="#FFB0B3BA" />
+                    <SolidColorBrush x:Key="ErrorForegroundBrush" Color="#FFF2B8B5" />
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
 </Application>
