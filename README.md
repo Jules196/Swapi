@@ -1,55 +1,53 @@
 # Swapi
 
-Parallele Desktop-Anwendungen, die denselben modernen .NET-Projektstandard
-verwenden:
+Parallel desktop applications that use the same modern .NET project standard:
 
-- **Swapi.Wpf** – native Windows-Anwendung mit WPF
-- **Swapi.Avalonia** – plattformübergreifende Anwendung mit Avalonia
-- **Swapi.Wpf.Hosting** – dieselbe WPF-Anwendung, aber mit `HostApplicationBuilder`
-- **Swapi.Avalonia.Hosting** – dieselbe Avalonia-Anwendung, aber mit `HostApplicationBuilder`
-- **WPF_old** – das ursprüngliche WPF-Beispiel inklusive Backend und Tests
+- **Swapi.Wpf** – native Windows application using WPF
+- **Swapi.Avalonia** – cross-platform application using Avalonia
+- **Swapi.Wpf.Hosting** – the same WPF application, but using `HostApplicationBuilder`
+- **Swapi.Avalonia.Hosting** – the same Avalonia application, but using `HostApplicationBuilder`
+- **WPF_old** – the original WPF sample including backend and tests
 
-Die Projekte basieren auf .NET 10, nutzen MVVM mit
-`CommunityToolkit.Mvvm`, Nullable Reference Types und zentral verwaltete
-Paketversionen.
+The projects target .NET 10, use MVVM with `CommunityToolkit.Mvvm`, nullable
+reference types and centrally managed package versions.
 
-## Erscheinungsbild (Theme, Style, Metriken)
+## Appearance (theme, style, metrics)
 
-Alle vier Beispiele in `src/` lassen sich zur Laufzeit in drei voneinander
-unabhängigen Achsen umschalten. Die Auswahl steht als Kombinationsfelder oben
-rechts im Fenster.
+All four samples in `src/` can be switched at runtime along three independent
+axes. The selection is available as combo boxes in the top right of the window.
 
-- **Theme** (`Themes/`, Avalonia: `ThemeDictionaries` in `App.axaml`) – die
-  Grundfarben (`Light`/`Dark`, in Avalonia zusätzlich `System`).
-- **Style** (`Styles/Classic`, `Ocean`, `Sunset`) – die Akzentfarben
-  (`AccentBrush`, `AccentForegroundBrush`, `AccentSubtleBrush`), die für
-  Überschriften, Schaltflächen und den Fortschrittsbalken verwendet werden.
-- **Metriken** (`Metrics/Compact`, `Comfortable`, `Spacious`) – Schriftgrößen,
-  Abstände, Innenabstände und Eckradien (z. B. `TitleFontSize`, `CardPadding`,
-  `SectionMargin`, `ControlCornerRadius`).
+- **Theme** (`Themes/`, Avalonia: `ThemeDictionaries` in `App.axaml`) – the base
+  colors (`Light`/`Dark`, plus `System` in Avalonia).
+- **Style** (`Styles/Classic`, `Ocean`, `Sunset`) – the accent colors
+  (`AccentBrush`, `AccentForegroundBrush`, `AccentSubtleBrush`) used for
+  headings, buttons and the progress bar.
+- **Metrics** (`Metrics/Compact`, `Comfortable`, `Spacious`) – font sizes,
+  margins, paddings and corner radii (for example `TitleFontSize`,
+  `CardPadding`, `SectionMargin`, `ControlCornerRadius`).
 
-Jede Variante einer Achse definiert dieselben Schlüssel, sodass sie beliebig
-kombiniert werden können. `Theming/ThemeManager.cs` bietet je eine
-`Apply`-Überladung für `AppTheme`, `AppStyle` und `AppMetrics`.
+Every variant of an axis defines the same keys, so they can be combined freely.
+`Theming/ThemeManager.cs` provides one `Apply` overload each for `AppTheme`,
+`AppStyle` and `AppMetrics`.
 
-- **Avalonia**: Die Farben nutzen die `ThemeVariant`-Unterstützung des
-  Fluent-Themes; `ThemeManager.Apply(AppTheme)` setzt
-  `Application.Current.RequestedThemeVariant` auf `Default` (System), `Light`
-  oder `Dark`. Style- und Metrik-Wörterbücher werden als `ResourceInclude` in
-  `Application.Resources.MergedDictionaries` ausgetauscht.
-- **WPF**: WPF bringt kein eigenes Theming mit. Alle Werte sind deshalb je
-  Variante als Ressourcen-Wörterbuch definiert; der `ThemeManager` ersetzt das
-  jeweils zusammengeführte Wörterbuch der Anwendung. Da die Views die Werte mit
-  `DynamicResource` referenzieren, wirkt der Wechsel sofort. Implizite Styles in
-  `App.xaml` sorgen dafür, dass auch die Standardsteuerelemente folgen.
+- **Avalonia**: the colors use the `ThemeVariant` support of the Fluent theme;
+  `ThemeManager.Apply(AppTheme)` sets
+  `Application.Current.RequestedThemeVariant` to `Default` (system), `Light` or
+  `Dark`. Style and metric dictionaries are swapped as `ResourceInclude` entries
+  in `Application.Resources.MergedDictionaries`.
+- **WPF**: WPF does not ship its own theming. All values are therefore defined
+  per variant as a resource dictionary; the `ThemeManager` replaces the
+  corresponding merged dictionary of the application. Because the views
+  reference the values with `DynamicResource`, the change takes effect
+  immediately. Implicit styles in `App.xaml` make sure the default controls
+  follow along as well.
 
-## Voraussetzungen
+## Prerequisites
 
 - [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
-- Windows zum Ausführen der WPF-Anwendung
-- Windows, macOS oder Linux zum Ausführen der Avalonia-Anwendung
+- Windows to run the WPF application
+- Windows, macOS or Linux to run the Avalonia application
 
-## Projektstruktur
+## Project structure
 
 ```text
 Swapi.slnx
@@ -66,53 +64,52 @@ SwapiBackendTests/
 SwapiFrontEndWPF.Test/
 ```
 
-## Entwickeln
+## Development
 
 ```bash
 dotnet restore Swapi.slnx
 dotnet build Swapi.slnx
 ```
 
-Avalonia starten:
+Run Avalonia:
 
 ```bash
 dotnet run --project src/Swapi.Avalonia/Swapi.Avalonia.csproj
 ```
 
-WPF unter Windows starten:
+Run WPF on Windows:
 
 ```powershell
 dotnet run --project src/Swapi.Wpf/Swapi.Wpf.csproj
 ```
 
-Das ursprüngliche WPF-Beispiel unter Windows starten:
+Run the original WPF sample on Windows:
 
 ```powershell
 dotnet run --project WPF_old/WPF_old.csproj
 ```
 
-## Beispiele mit dem ApplicationBuilder
+## Samples using the ApplicationBuilder
 
-`Swapi.Wpf.Hosting` und `Swapi.Avalonia.Hosting` zeigen dieselbe Oberfläche,
-bauen die Anwendung aber mit dem `HostApplicationBuilder`
-(`Host.CreateApplicationBuilder`) aus `Microsoft.Extensions.Hosting` auf:
+`Swapi.Wpf.Hosting` and `Swapi.Avalonia.Hosting` show the same user interface,
+but build the application with the `HostApplicationBuilder`
+(`Host.CreateApplicationBuilder`) from `Microsoft.Extensions.Hosting`:
 
-- Der Einstiegspunkt liegt in `Program.cs`; die UI wird erst nach dem Aufbau des
-  Hosts gestartet.
-- `ISwapiPersons`, das `MainViewModel`, das Hauptfenster und die
-  `Application`-Klasse werden über Dependency Injection registriert und
-  aufgelöst.
-- Logging (`ILogger<T>`) und Konfiguration stehen zur Verfügung; die Quelle der
-  Star-Wars-Daten wird über den Abschnitt `Swapi:SourceUri` aus
-  `appsettings.json` gebunden (leerer Wert = Standard-Endpunkt).
+- The entry point is in `Program.cs`; the UI only starts after the host has been
+  built.
+- `ISwapiPersons`, the `MainViewModel`, the main window and the `Application`
+  class are registered and resolved through dependency injection.
+- Logging (`ILogger<T>`) and configuration are available; the source of the
+  Star Wars data is bound from the `Swapi:SourceUri` section of
+  `appsettings.json` (an empty value means the default endpoint).
 
-Avalonia-Beispiel starten:
+Run the Avalonia sample:
 
 ```bash
 dotnet run --project src/Swapi.Avalonia.Hosting/Swapi.Avalonia.Hosting.csproj
 ```
 
-WPF-Beispiel unter Windows starten:
+Run the WPF sample on Windows:
 
 ```powershell
 dotnet run --project src/Swapi.Wpf.Hosting/Swapi.Wpf.Hosting.csproj
