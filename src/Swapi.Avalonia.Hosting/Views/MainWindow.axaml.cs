@@ -1,4 +1,6 @@
+using System;
 using Avalonia.Controls;
+using Swapi.Avalonia.Hosting.Theming;
 using Swapi.Avalonia.Hosting.ViewModels;
 
 namespace Swapi.Avalonia.Hosting.Views;
@@ -17,6 +19,25 @@ public partial class MainWindow : Window
     {
         // Loads the XAML defined in MainWindow.axaml.
         InitializeComponent();
+
+        // Fill the theme selector with the available themes and preselect the
+        // theme that is currently applied.
+        ThemeSelector.ItemsSource = Enum.GetValues<AppTheme>();
+        ThemeSelector.SelectedItem = ThemeManager.CurrentTheme;
+    }
+
+    /// <summary>
+    /// Applies the theme chosen in the combo box. Avalonia re-evaluates the
+    /// theme dictionaries for the new variant, so the window updates at once.
+    /// </summary>
+    /// <param name="sender">The theme combo box.</param>
+    /// <param name="e">Selection data provided by Avalonia.</param>
+    private void OnThemeSelectionChanged(object? sender, SelectionChangedEventArgs e)
+    {
+        if (ThemeSelector.SelectedItem is AppTheme theme)
+        {
+            ThemeManager.Apply(theme);
+        }
     }
 
     /// <summary>

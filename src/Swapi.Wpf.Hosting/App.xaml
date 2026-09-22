@@ -4,10 +4,46 @@
              xmlns:local="clr-namespace:Swapi.Wpf.Hosting">
     <!--
         Application level resources. The startup logic lives in Program.cs and
-        App.xaml.cs; this file only declares shared resources.
+        App.xaml.cs; this file only declares shared resources and the theme.
     -->
     <Application.Resources>
-        <!-- Used by the main window to show the progress bar while loading. -->
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!-- Start-up theme; ThemeManager replaces this dictionary at runtime. -->
+                <ResourceDictionary Source="pack://application:,,,/Themes/Light.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <!-- Used by the main window to show the progress bar while loading. -->
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
+            <!--
+                Implicit styles so that the standard controls follow the theme
+                colours. All brushes are referenced with DynamicResource, which
+                is what makes switching the theme at runtime possible.
+            -->
+            <Style TargetType="TextBlock">
+                <Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}" />
+            </Style>
+
+            <Style TargetType="TextBox">
+                <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
+                <Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
+                <Setter Property="CaretBrush" Value="{DynamicResource ForegroundBrush}" />
+                <Setter Property="Padding" Value="6,4" />
+            </Style>
+
+            <Style TargetType="Button">
+                <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
+                <Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
+            </Style>
+
+            <Style TargetType="ListBox">
+                <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
+                <Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}" />
+                <Setter Property="BorderThickness" Value="0" />
+            </Style>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

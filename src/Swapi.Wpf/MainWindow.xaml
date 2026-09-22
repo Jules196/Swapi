@@ -10,7 +10,8 @@
         Height="560"
         Width="900"
         MinHeight="420"
-        MinWidth="680">
+        MinWidth="680"
+        Background="{DynamicResource WindowBackgroundBrush}">
     <Grid Margin="24">
         <Grid.RowDefinitions>
            <RowDefinition Height="Auto" />
@@ -22,10 +23,23 @@
            <TextBlock FontSize="24"
                       FontWeight="SemiBold"
                       Text="Star Wars Characters" />
-           <Button HorizontalAlignment="Right"
-                   Command="{Binding LoadPeopleCommand}"
-                   Content="Refresh"
-                   Padding="12,6" />
+           <!-- Theme selection: switches the merged theme dictionary at runtime. -->
+           <StackPanel DockPanel.Dock="Right"
+                       HorizontalAlignment="Right"
+                       Orientation="Horizontal">
+              <TextBlock Margin="0,0,8,0"
+                         VerticalAlignment="Center"
+                         Foreground="{DynamicResource SubtleForegroundBrush}"
+                         Text="Theme" />
+              <ComboBox x:Name="ThemeSelector"
+                        Width="110"
+                        VerticalAlignment="Center"
+                        SelectionChanged="OnThemeSelectionChanged" />
+              <Button Margin="12,0,0,0"
+                      Command="{Binding LoadPeopleCommand}"
+                      Content="Refresh"
+                      Padding="12,6" />
+           </StackPanel>
         </DockPanel>
 
         <StackPanel Grid.Row="1" Margin="0,12,0,16">
@@ -33,7 +47,7 @@
                         IsIndeterminate="True"
                         Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}" />
            <TextBlock Margin="0,8,0,0"
-                      Foreground="Firebrick"
+                      Foreground="{DynamicResource ErrorForegroundBrush}"
                       Text="{Binding ErrorMessage}" />
         </StackPanel>
 
@@ -44,7 +58,8 @@
               <ColumnDefinition Width="320" />
            </Grid.ColumnDefinitions>
 
-           <Border BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"
+           <Border Background="{DynamicResource ControlBackgroundBrush}"
+                   BorderBrush="{DynamicResource BorderBrush}"
                    BorderThickness="1"
                    CornerRadius="6">
               <ListBox ItemsSource="{Binding People}">
@@ -58,8 +73,8 @@
 
            <Border Grid.Column="2"
                    Padding="20"
-                   Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}"
-                   BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"
+                   Background="{DynamicResource CardBackgroundBrush}"
+                   BorderBrush="{DynamicResource BorderBrush}"
                    BorderThickness="1"
                    CornerRadius="6">
               <StackPanel>
@@ -71,27 +86,27 @@
                  <TextBox Text="{Binding CurrentYear, UpdateSourceTrigger=PropertyChanged}" />
                  <TextBlock Margin="0,4,0,0"
                             FontSize="12"
-                            Foreground="Firebrick"
+                            Foreground="{DynamicResource ErrorForegroundBrush}"
                             Text="{Binding CurrentYearError}"
                             TextWrapping="Wrap" />
 
                  <TextBlock Margin="0,18,0,4"
-                            Foreground="DimGray"
+                            Foreground="{DynamicResource SubtleForegroundBrush}"
                             Text="Average height" />
                  <TextBlock FontSize="16" Text="{Binding AverageHeight}" />
 
                  <TextBlock Margin="0,18,0,4"
-                            Foreground="DimGray"
+                            Foreground="{DynamicResource SubtleForegroundBrush}"
                             Text="Average age" />
                  <TextBlock FontSize="16" Text="{Binding AverageAge}" />
 
                  <TextBlock Margin="0,18,0,4"
-                            Foreground="DimGray"
+                            Foreground="{DynamicResource SubtleForegroundBrush}"
                             Text="Male ratio" />
                  <TextBlock FontSize="16" Text="{Binding MalePercentage}" />
 
                  <TextBlock Margin="0,18,0,4"
-                            Foreground="DimGray"
+                            Foreground="{DynamicResource SubtleForegroundBrush}"
                             Text="Female ratio" />
                  <TextBlock FontSize="16" Text="{Binding FemalePercentage}" />
               </StackPanel>
